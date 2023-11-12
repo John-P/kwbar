@@ -13,13 +13,13 @@ from warnings import warn
 
 SF: int = 2
 """Number of significant figures to use in scientific notation value string."""
-SHOW_VAL: bool = True
+SHOW_VALS: bool = True
 """Whether to display the value as a string in a scientific notation format."""
 TRUNCATE: Union[float, int] = 0.25
 """Proportion of width to truncate keys after. If an int, used as the value."""
 WIDTH: int = -1
 """Width of the bar chart. If <= 0, then the terminal width is used instead."""
-BAR_CHARS: str = " ▏▎▍▌▋▊▉█"  # Unicode block elements (U+2580 through U+2588).
+BAR_CHARS: str = "▏▎▍▌▋▊▉█"  # Using Unicode block elements (U+2580 to U+2588).
 """Characters used to show bars. Chars 0 to -2 print for partial bar chunks."""
 R = "\x1b[0m"
 """Escape sequence to reset all terminal formatting (foreground/background)."""
@@ -37,8 +37,8 @@ PAD = "  "
 
 def hotdog() -> None:
     """Make a chart using hotdog emoji. Defaults to allow 2 cols per emoji."""
-    global BAR_CHARS, POS, NEG, INV, R, WIDTH, SHOW_VAL  # Oh no! Not a global!
-    BAR_CHARS, POS, NEG, INV, R, SHOW_VAL = " ⅛¼⅜½⅝¾⅞🌭", "", "", "", "", False
+    global BAR_CHARS, POS, NEG, INV, R, WIDTH, SHOW_VALS  # Oh no not a global!
+    BAR_CHARS, POS, NEG, INV, R, SHOW_VALS = "⅛¼⅜½⅝¾⅞🌭", "", "", "", "", False
     WIDTH = WIDTH if WIDTH > 0 else term_size()[0] // 2  # Use 2 cols for a 🌭.
 
 
@@ -80,10 +80,10 @@ def kwbar(**kwargs: SupportsFloat) -> None:
         # Print value strings which fit inside of the bar with inverted colors.
         inside = post = ""  # Value strs to be shown, inside and after the bar.
         pad = PAD[0] if isfinite(val) else PAD[1]  # Pad char to use for value.
-        if bar_len >= val_str_len and SHOW_VAL:  # Print values inside the bar.
+        if bar_len >= val_str_len and SHOW_VALS:  # Print value inside the bar.
             inside = f"{val:{pad}>{val_str_len}.{SF}e}"  # Pretty inverted val.
             bar_len -= val_str_len  # Subtract the inside val str from the bar.
-        elif SHOW_VAL:  # For short bars, print the value stings after instead.
+        elif SHOW_VALS:  # For short bars print the value stings after instead.
             post = f"{val:{pad}>{val_str_len}.{SF}e}"  # Regular value string.
         bar = BAR_CHARS[-1] * int(bar_len)  # Build a bar string of full chars.
         if part_index := round((bar_len % 1) * len(BAR_CHARS)):  # Partial bit?
