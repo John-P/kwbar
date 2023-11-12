@@ -19,6 +19,7 @@ Easily create a bar chart with `kwbar`; pass keyword arguments that can be conve
 - Respects the [`NO_COLOR` environment variable](https://no-color.org).
 - Has an ASCII mode, enabled on import when stdout is not TTY.
 - Warns on stderr (can be disabled) if the output will have to overrun the configured width.
+- Fixed output width. This is done by setting `TRUNCATE` and `WIDTH` to satisfy: `WIDTH` - `TRUNCATE` - `SF` - 17 >= 0.
 
 ## Options
 
