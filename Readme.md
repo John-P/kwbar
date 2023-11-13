@@ -8,6 +8,8 @@ Easily create a bar chart with `kwbar`; pass keyword arguments that can be conve
 
 `kwbar` several useful features:
 
+- Pure Python and zero dependencies.
+- Minimal implementation which can be audited in a few minutes.
 - Prints the names of the passed keyword arguments.
 - Plots any object that can be converted to float (SupportsFloat).
 - Customizable width, but it uses the entire terminal width by default.
