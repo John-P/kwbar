@@ -61,15 +61,15 @@ def kwbar(**kwargs: SupportsFloat) -> None:
         f"{k:>{int(TRUNCATE)}}"  # Right pad with spaces to fit TRUNCATE (> 0).
         if len(k) <= truncate_len  # Only adds padding when a key is too short.
         else f"{k[:truncate_len - 1]}…": v  # Truncate and add an ellipsis (…),
-        for k, v in kwargs.items() # for any keys longer than our truncate_len.
-    } # This takes up a ton of space but it makes the output look a lot better.
+        for k, v in kwargs.items()  # for any keys longer than our truncate_len.
+    }  # This takes up a ton of space but it makes the output look a lot better.
     max_val = max(abs(float(v)) for v in kwargs.values())  # Get the max value.
     max_key_len = max(len(k) for k in kwargs.keys())  # Get the max key length.
     val_str_len = 7 + SF  # Format = r"[ -]\d\.\d{DP}e[+-]\d\d" = 7 + SF chars.
     # Overflow the width if truncated keys, bars, and value strings do not fit.
     cols = max(cols, max_key_len + 1 + val_str_len)  # + 1 for the padding " ".
     # Find the maximum possible length of bars after the key and the pad space.
-    max_bar_len = cols - max_key_len - 1  # - 1 for a pad space after the key.
+    max_bar_len = cols - max_key_len - 1  # - 1 for a pad space after each key.
     for key, val in kwargs.items():  # <---- The main loop! Where the magic is.
         bar_len = (  # Calculate the bar length, checking for: NaN, +inf, -inf.
             (abs(float(val)) / max_val) * max_bar_len  # The length of the bar,
@@ -84,7 +84,7 @@ def kwbar(**kwargs: SupportsFloat) -> None:
             inside = f"{val:{pad}>{val_str_len}.{SF}e}"  # Pretty inverted val.
             bar_len -= val_str_len  # Subtract the inside val str from the bar.
         elif SHOW_VALS:  # For short bars print the value stings after instead.
-            post = f"{val:{pad}>{val_str_len}.{SF}e}"  # Regular value string.
+            post = f"{val:{pad}>{val_str_len}.{SF}e}"  # Post bar value string.
         bar = BAR_CHARS[-1] * int(bar_len)  # Build a bar string of full chars.
         if part_index := round((bar_len % 1) * len(BAR_CHARS)):  # Partial bit?
             bar += BAR_CHARS[part_index - 1]  # Add a partial char (1-indexed).
