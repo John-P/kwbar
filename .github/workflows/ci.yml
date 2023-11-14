@@ -57,7 +57,7 @@ jobs:
       - name: Push changes
         run: git push origin main
   publish: # Publish if tagged and tag starts with v
-    needs: test
+    needs: bump
     runs-on: ubuntu-latest
     environment: publish
     permissions:
