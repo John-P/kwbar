@@ -2,7 +2,7 @@
 
 Easily create a bar chart with `kwbar`; pass keyword arguments that can be converted to float.
 
-![kwbar](kwbar.png)
+![kwbar](https://github.com/John-P/kwbar/raw/main/kwbar.png)
 
 ## Features
 
