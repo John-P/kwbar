@@ -60,8 +60,8 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     environment: publish
-    # Only run if tagged and tag starts with v and on the main branch
-    if: ${{ startsWith(github.ref, 'refs/tags/v') && contains(github.ref, 'refs/heads/main') }}
+    # Only run if on the main branch
+    if: ${{ contains(github.ref, 'refs/heads/main') }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
