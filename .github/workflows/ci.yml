@@ -71,7 +71,7 @@ jobs:
         run: pipx install poetry==${{ env.POETRY_VERSION }}
       - name: Configure Test PyPI
         run: poetry config repositories.test-pypi https://test.pypi.org/legacy/
-      - name: Publish to (Test) PyPI
-        run: poetry publish --build -u __token__ --repository test-pypi
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.TEST_PYPI_TOKEN }}
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
