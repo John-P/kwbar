@@ -70,7 +70,6 @@ jobs:
       - name: Configure Test PyPI
         run: poetry config repositories.test-pypi https://test.pypi.org/legacy/
       - name: Publish to (Test) PyPI
-        run: poetry publish --build --repository test-pypi
+        run: poetry publish --build -u __token__ --repository test-pypi
         env:
-          POETRY_HTTP_BASIC_TEST_USERNAME: __token__
-          POETRY_HTTP_BASIC_TEST_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.TEST_PYPI_TOKEN }}
