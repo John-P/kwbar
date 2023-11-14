@@ -61,10 +61,8 @@ Hotdog mode:
 >>> kwbar.WIDTH = 33
 >>> kwbar.hotdog()
 >>> kwbar.kwbar(one=1, two=2, three=3, four=4)
- one 🌭🌭🌭🌭🌭🌭🌭🌭🌭
- two 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭¾
-  pi 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭
- neg 🌭🌭🌭🌭🌭🌭🌭🌭🌭
-half 🌭🌭🌭🌭¼
- nan
+  one 🌭🌭🌭🌭🌭🌭¾
+  two 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭½
+three 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭¼
+ four 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭
 ````
