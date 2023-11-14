@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kwbar"
-version = "0.1.1a2"
+version = "0.1.1a3"
 description = "Print kwargs as a bar chart."
 authors = ["John Pocock <pypi@pocock.io>"]
 license = "MIT"
