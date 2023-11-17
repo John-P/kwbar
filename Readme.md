@@ -4,6 +4,8 @@ Easily create a bar chart with `kwbar`; pass keyword arguments that can be conve
 
 ![kwbar](https://github.com/John-P/kwbar/raw/main/kwbar.png)
 
+I made this for fun, but then I thought other people might actually find it useful.
+
 ## Features
 
 `kwbar` several useful features:
