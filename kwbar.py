@@ -10,6 +10,9 @@ from math import isfinite, isinf
 from os import getenv
 from typing import SupportsFloat, Union
 from warnings import warn
+import importlib.metadata
+
+__version__ = importlib.metadata.version(__name__)  # Get kwbar version string.
 
 SF: int = 2
 """Number of significant figures to use in scientific notation value string."""
