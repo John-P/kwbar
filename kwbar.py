@@ -55,7 +55,7 @@ def ascii() -> None:
 
 
 # Tell kwbar to use ASCII text if stdout is not a TTY (ANSI color safe...ish?).
-ascii() if not sys.stdout.isatty() and "get_ipython" not in globals() else ...
+ascii() if not sys.stdout.isatty() else ...
 
 
 def kwbar(**kwargs: SupportsFloat) -> None:
