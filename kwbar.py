@@ -25,17 +25,17 @@ WIDTH: int = -1
 """Width of the bar chart. If <= 0, then the terminal width is used instead."""
 BAR_CHARS: str = "▏▎▍▌▋▊▉█"  # Using Unicode block elements (U+2580 to U+2588).
 """Characters used to show bars. Chars 0 to -2 print for partial bar chunks."""
-R = "\x1b[0m"
+R: str = "\x1b[0m"
 """Escape sequence to reset all terminal formatting (foreground/background)."""
-POS = ""
+POS: str = ""
 """Escape sequence to set the foreground color when showing positive values."""
-NEG = "" if getenv("NO_COLOR") else "\x1b[31m"  # Red.
+NEG: str = "" if getenv("NO_COLOR") else "\x1b[31m"  # Red.
 """Escape sequence to set the foreground color when showing negative values."""
-INV = "\x1b[7m"
+INV: str = "\x1b[7m"
 """Escape sequence to invert/reverse the foreground/background value colors."""
-WARN = True
+WARN: bool = True
 """Whether to warn on stderr when width is too narrow to fit all the output."""
-PAD = "  "
+PAD: str = "  "
 """Padding characters to use for values. First char for finite, else second."""
 
 
