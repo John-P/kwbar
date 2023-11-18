@@ -64,8 +64,8 @@ def kwbar(**kwargs: SupportsFloat) -> None:
         f"{k:>{int(TRUNCATE)}}"  # Right pad with spaces to fit TRUNCATE (> 0).
         if len(k) <= truncate_len  # Only adds padding when a key is too short.
         else f"{k[:truncate_len - 1]}…": v  # Truncate and add an ellipsis (…),
-        for k, v in kwargs.items()  # for any keys longer than our truncate_len.
-    }  # This takes up a ton of space but it makes the output look a lot better.
+        for k, v in kwargs.items()  # for any key longer than our truncate_len.
+    }  # This uses quite a bit of space but makes the output look a lot better.
     max_val = max(abs(float(v)) for v in kwargs.values())  # Get the max value.
     max_key_len = max(len(k) for k in kwargs.keys())  # Get the max key length.
     val_str_len = 7 + SF  # Format = r"[ -]\d\.\d{DP}e[+-]\d\d" = 7 + SF chars.
