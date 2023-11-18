@@ -4,13 +4,14 @@
 # ///
 """Print keywords as a text bar chart on stdout respecting NO_COLOR and TTY."""
 
-from shutil import get_terminal_size as term_size
+import importlib.metadata
+import importlib.util
 import sys
 from math import isfinite, isinf
 from os import getenv
+from shutil import get_terminal_size as term_size
 from typing import SupportsFloat, Union
 from warnings import warn
-import importlib.metadata
 
 __version__ = importlib.metadata.version(__name__)  # Get kwbar version string.
 
@@ -52,7 +53,7 @@ def ascii() -> None:
 
 
 # Tell kwbar to use ASCII text if stdout is not a TTY (ANSI color safe...ish?).
-ascii() if not sys.stdout.isatty() else ...
+ascii() if not sys.stdout.isatty() and "get_ipython" not in globals() else ...
 
 
 def kwbar(**kwargs: SupportsFloat) -> None:
