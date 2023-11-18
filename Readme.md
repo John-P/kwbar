@@ -1,5 +1,13 @@
 # █ kwbar – Print Keywords as a Bar Chart
 
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/charliermarsh/ruff)
+[![GitMoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg)](https://gitmoji.dev)
+[![image](https://img.shields.io/pypi/v/kwbar.svg)](https://pypi.python.org/pypi/kwbar)
+[![image](https://img.shields.io/pypi/l/kwbar.svg)](https://pypi.python.org/pypi/kwbar)
+[![image](https://img.shields.io/pypi/pyversions/kwbar.svg)](https://pypi.python.org/pypi/kwbar)
+[![Continuous Integration](https://github.com/John-P/kwbar/actions/workflows/ci.yml/badge.svg)](https://github.com/John-P/kwbar/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/John-P/kwbar/graph/badge.svg?token=AYTCMEYTCU)](https://codecov.io/gh/John-P/kwbar)
+
 Easily create a bar chart with `kwbar`; pass keyword arguments that can be converted to float.
 
 ![kwbar](https://github.com/John-P/kwbar/raw/main/kwbar.png)
