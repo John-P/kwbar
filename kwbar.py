@@ -37,6 +37,8 @@ WARN: bool = True
 """Whether to warn on stderr when width is too narrow to fit all the output."""
 PAD: str = "  "
 """Padding characters to use for values. First char for finite, else second."""
+_ASCII_: bool = False
+"""Whether currently using ASCII instead of Unicode block elements to print."""
 
 
 def hotdog() -> None:
@@ -48,8 +50,8 @@ def hotdog() -> None:
 
 def ascii() -> None:
     """Set kwbar to ASCII mode. Called when writing out to a non-TTY stdout."""
-    global BAR_CHARS, POS, NEG, INV, R, PAD  # Could I do this without globals?
-    BAR_CHARS, POS, NEG, INV, R, PAD = "X", "", "", "", "", "+X"  # Sure could!
+    global BAR_CHARS, POS, NEG, INV, R, PAD, _ASCII_  # More global horrors! :O
+    BAR_CHARS, POS, NEG, INV, R, PAD, _ASCII_ = "X", "", "", "", "", "+X", True
 
 
 # Tell kwbar to use ASCII text if stdout is not a TTY (ANSI color safe...ish?).
@@ -71,9 +73,9 @@ def kwbar(**kwargs: SupportsFloat) -> None:
     max_key_len = max(len(k) for k in kwargs.keys())  # Get the max key length.
     val_str_len = 7 + SF  # Format = r"[ -]\d\.\d{DP}e[+-]\d\d" = 7 + SF chars.
     # Overflow the width if truncated keys, bars, and value strings do not fit.
-    cols = max(cols, max_key_len + 1 + val_str_len)  # + 1 for the padding " ".
+    cols = max(cols, max_key_len + 1 + val_str_len * (_ASCII_ != 0))  # +1 " ".
     # Find the maximum possible length of bars after the key and the pad space.
-    max_bar_len = cols - max_key_len - 1  # - 1 for a pad space after each key.
+    max_bar_len = cols - max_key_len - 1 - _ASCII_  # -1 for a space after key.
     for key, val in kwargs.items():  # <---- The main loop! Where the magic is.
         bar_len = (  # Calculate the bar length, checking for: NaN, +inf, -inf.
             (abs(float(val)) / max_val) * max_bar_len  # The length of the bar,
@@ -85,7 +87,7 @@ def kwbar(**kwargs: SupportsFloat) -> None:
         inside = post = ""  # Value strs to be shown, inside and after the bar.
         pad = PAD[0] if isfinite(val) else PAD[1]  # Pad char to use for value.
         if bar_len >= val_str_len and SHOW_VALS:  # Print value inside the bar.
-            inside = f"{val:{pad}>{val_str_len}.{SF}e}"  # Pretty inverted val.
+            inside = f"{val:{pad}>{val_str_len}.{SF}e}" + f"{'': <{_ASCII_:d}}"
             bar_len -= val_str_len  # Subtract the inside val str from the bar.
         elif SHOW_VALS:  # For short bars print the value stings after instead.
             post = f"{val:{pad}>{val_str_len}.{SF}e}"  # Post bar value string.
