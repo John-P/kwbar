@@ -61,6 +61,7 @@ class TestKwbar(unittest.TestCase):
         # Act & Assert
         with self.assertRaises(ValueError):
             kwbar.kwbar()
+        self.tearDown()
 
     def test_fuzz_fixed_width_no_warnings(self):
         """Test that kwbar does not overrun or raise warnings with a fixed width."""
@@ -344,6 +345,7 @@ class TestKwbar(unittest.TestCase):
                 self.assertEqual(len(w), 0, "warnings.warn was called")
                 max_line_len = max(len(line) for line in strip_ansi(out.getvalue()))
                 self.assertLessEqual(max_line_len, width)
+        self.tearDown()
 
 
 if __name__ == "__main__":
