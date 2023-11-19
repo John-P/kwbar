@@ -49,6 +49,7 @@ kwbar.POS = ""  # ANSI escape code for positive values.
 kwbar.NEG = "\x1b[31m"  # ANSI escape code for negative values.
 kwbar.WARN = True  # Show a warning if the output will overrun the configured width.
 kwbar.PAD = " "  # Padding characters shown before finite and non-finite values.
+kwbar.BEFORE = False  # Show the value labels before the bar instead of inside.
 ```
 
 There are also a couple of functions to set multiple options at once:
