@@ -28,7 +28,7 @@ R: str = "\x1b[0m"
 """Escape sequence to reset all terminal formatting (foreground/background)."""
 POS: str = ""
 """Escape sequence to set the foreground color when showing positive values."""
-NEG: str = "" if getenv("NO_COLOR") else "\x1b[31m"  # Red if NO_COLOR not set.
+NEG: str = "\x1b[1m" if getenv("NO_COLOR") else "\x1b[31m"  # Bold or red -ves.
 """Escape sequence to set the foreground color when showing negative values."""
 INV: str = "\x1b[7m"
 """Escape sequence to invert/reverse the foreground/background value colors."""
