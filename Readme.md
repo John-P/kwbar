@@ -52,20 +52,26 @@ kwbar.PAD = " "  # Padding characters shown before finite and non-finite values.
 kwbar.BEFORE = False  # Show the value labels before the bar instead of inside.
 ```
 
+## Convenience Functions
+
 There are also a couple of functions to set multiple options at once:
+
+### ASCII Mode
+
+Sets `BAR_CHARS` and `PAD` to ASCII characters. Also disables all ANSI escape codes and sets `BEFORE` true.
 
 ```python
 >>> import kwbar
 >>> kwbar.WIDTH = 50
 >>> kwbar.ascii()
 >>> kwbar.kwbar(one=1, two=2, three=3, four=4)
-  one +1.00e+00XX
-  two +2.00e+00XXXXXXXXXXXXX
-three +3.00e+00XXXXXXXXXXXXXXXXXXXXXXXX
- four +4.00e+00XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  one +1.00e+00 XXXXXXXX
+  two +2.00e+00 XXXXXXXXXXXXXXXXX
+three +3.00e+00 XXXXXXXXXXXXXXXXXXXXXXXXX
+ four +4.00e+00 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-Hotdog mode:
+### Hotdog Mode
 
 ````python
 >>> import kwbar
