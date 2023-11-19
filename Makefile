@@ -1,6 +1,6 @@
 test:
 	coverage erase
-	coverage run --branch --omit tests.py tests.py
+	coverage run --branch --omit tests.py -m unittest -v tests.py
 	coverage report -m kwbar.py
 	coverage xml
 
