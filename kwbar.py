@@ -10,7 +10,7 @@ import sys
 from math import isfinite, isinf
 from os import getenv
 from shutil import get_terminal_size as term_size
-from typing import SupportsFloat, Union
+from typing import SupportsFloat
 from warnings import warn
 
 __version__ = importlib.metadata.version(__name__)  # Get kwbar version string.
@@ -19,8 +19,8 @@ SF: int = 2
 """Number of significant figures to use in scientific notation value string."""
 SHOW_VALS: bool = True
 """Whether to display the value as a string in a scientific notation format."""
-TRUNCATE: Union[float, int] = 0.25
-"""Proportion of width to truncate keys after. If an int, used as the value."""
+TRUNCATE: float = 0.25
+"""% of width to truncate keys after. If >1, the floor is used as max length."""
 WIDTH: int = -1
 """Width of the bar chart. If <= 0, then the terminal width is used instead."""
 BAR_CHARS: str = "▏▎▍▌▋▊▉█"  # Using Unicode block elements (U+2580 to U+2588).
