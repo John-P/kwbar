@@ -8,8 +8,7 @@ import re
 import sys
 import unittest
 import warnings
-
-from kwbar import WIDTH
+from unittest.mock import patch
 
 
 def strip_ansi(string: str) -> str:
@@ -40,33 +39,33 @@ class TestKwbar(unittest.TestCase):
 
     kwbar = None
 
-    @classmethod
-    def setUp(cls):
+    def setUp(self):
         """Set up the test case."""
+        self.patcher = patch("sys.stdout.isatty", return_value=True)
+        self.patcher.start()
         import kwbar as _kwbar
 
-        cls.kwbar = _kwbar
+        self.kwbar = _kwbar
 
-    @classmethod
-    def tearDown(cls):
+    def tearDown(self):
         """Tear down the test case."""
+        self.patcher.stop()
         sys.modules.pop("kwbar", None)
-        cls.kwbar = None
+        self.kwbar = None
 
     def test_kwbar_empty_input(self):
         """Test that kwbar raises an exception with empty input."""
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         # Act & Assert
         with self.assertRaises(ValueError):
             kwbar.kwbar()
-        self.tearDown()
 
     def test_fuzz_fixed_width_no_warnings(self):
         """Test that kwbar does not overrun or raise warnings with a fixed width."""
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.WIDTH = 24
         kwbar.TRUNCATE = 4
@@ -85,12 +84,11 @@ class TestKwbar(unittest.TestCase):
             for line in out.getvalue().splitlines():
                 line = strip_ansi(line)
                 self.assertLessEqual(len(line), kwbar.WIDTH)
-        self.tearDown()
 
     def test_warns_over_width(self):
         """Test that kwbar warns when the output overflows."""
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.WIDTH = 19
         kwbar.TRUNCATE = 4
@@ -101,7 +99,23 @@ class TestKwbar(unittest.TestCase):
         # Assert
         self.assertGreaterEqual(len(w), 1, "warnings.warn was not called")
         self.assertIn("overflow", str(w[0].message))
-        self.tearDown()
+
+    def test_ascii_warns_over_width(self):
+        """Test that kwbar warns when the output overflows when in ASCII mode."""
+        # Arrange
+
+        kwbar = self.kwbar
+        kwbar.ascii()
+        kwbar.BEFORE = False
+        kwbar.WIDTH = 19
+        kwbar.TRUNCATE = 4
+        out = io.StringIO()
+        with warnings.catch_warnings(record=True) as w, contextlib.redirect_stdout(out):
+            # Act
+            kwbar.kwbar(one=1, two=2, pi=3.14)
+        # Assert
+        self.assertGreaterEqual(len(w), 1, "warnings.warn was not called")
+        self.assertIn("overflow", str(w[0].message))
 
     def test_ascii_mode(self):
         """Test that kwbar only outputs ASCII after ascii() is called."""
@@ -117,12 +131,11 @@ class TestKwbar(unittest.TestCase):
         for line in out.getvalue().splitlines():
             # Assert
             self.assertTrue(is_ascii(line))
-        self.tearDown()
 
     def test_hotdog_mode(self):
         """Test that kwbar uses hotdog mode when requested."""
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.WIDTH = 40
         kwbar.TRUNCATE = 4
@@ -133,7 +146,6 @@ class TestKwbar(unittest.TestCase):
             kwbar.kwbar(one=1, two=2, pi=3.14)
         # Assert
         self.assertTrue("🌭" in out.getvalue())
-        self.tearDown()
 
     def test_partial_hotdogs(self):
         """Test that hotdogs counts and rounding are correct.
@@ -149,7 +161,7 @@ class TestKwbar(unittest.TestCase):
         - 🌭  = 1.000 [0.9375, 1.0000] Close enough
         """
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.WIDTH = 23
         kwbar.TRUNCATE = 10
@@ -186,11 +198,10 @@ class TestKwbar(unittest.TestCase):
         self.assertTrue(out.getvalue().splitlines()[5].endswith("⅞"))
         # Assert that 0.9375 is shown as 1 hotdog
         self.assertTrue(out.getvalue().splitlines()[6].endswith("🌭"))
-        self.tearDown()
 
     def test_ascii_outside_no_vals(self):
         """Test correct bar lengths when no values are shown (OUTSIDE = True)."""
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.ascii()
         kwbar.TRUNCATE = 10
@@ -213,11 +224,10 @@ class TestKwbar(unittest.TestCase):
         self.assertEqual(len(w), 1, "warnings.warn was not called")
         # Check that line 0 has 12 chars after the last space
         self.assertEqual(len(out.getvalue().splitlines()[0].split()[-1]), 12)
-        self.tearDown()
 
     def test_ascii_outside_values(self):
         """Test correct bar lengths when values are shown outside (before) bars."""
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.ascii()
         kwbar.WIDTH = 33
@@ -250,11 +260,10 @@ class TestKwbar(unittest.TestCase):
         self.assertEqual(out.getvalue().splitlines()[4].count("X"), 0)
         # Assert that near one shows 1 X
         self.assertEqual(out.getvalue().splitlines()[5].count("X"), 1)
-        self.tearDown()
 
     def test_fuzz_outside_has_no_effect_when_show_vals_false(self):
         """Test that OUTSIDE makes no difference when SHOW_VALS is False."""
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.ascii()
         kwbar.WIDTH = 25
@@ -291,12 +300,10 @@ class TestKwbar(unittest.TestCase):
             # Assert that the output is the same
             self.assertEqual(outside_out.getvalue(), inside_out.getvalue())
 
-        self.tearDown()
-
-    def test_fixed_width(self):
-        """Test the a fixed width output functions as expected."""
+    def test_warning_triggers_correctly(self):
+        """Test that a fixed width output warns when expected."""
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         WIDTHS = (23, 24, 32, 40, 48, 64, 72, 80)
         TRUNCATES = range(1, 11)
@@ -316,13 +323,20 @@ class TestKwbar(unittest.TestCase):
             ):
                 kwbar.kwbar(**data)
             # Assert
-            self.assertEqual(len(w), not should_fit, "warnings.warn was called")
-        self.tearDown()
+            self.assertEqual(
+                len(w), not should_fit, "warning did not match expectation"
+            )
+            if should_fit:
+                max_line_len = max(len(line) for line in strip_ansi(out.getvalue()))
+                if max_line_len > kwbar.WIDTH:
+                    print()
+                    print(out.getvalue())
+                self.assertLessEqual(max_line_len, kwbar.WIDTH)
 
     def test_fuzz_fix_width_outside(self):
         """Ensure that width is fixed when OUTSIDE = True and TRUNCATE > 1."""
         # Arrange
-        self.setUp()
+
         kwbar = self.kwbar
         kwbar.BEFORE = True
         WIDTHS = (23, 24, 32, 40, 48, 64, 72, 80)
@@ -345,7 +359,6 @@ class TestKwbar(unittest.TestCase):
                 self.assertEqual(len(w), 0, "warnings.warn was called")
                 max_line_len = max(len(line) for line in strip_ansi(out.getvalue()))
                 self.assertLessEqual(max_line_len, width)
-        self.tearDown()
 
 
 if __name__ == "__main__":

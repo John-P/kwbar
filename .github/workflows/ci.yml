@@ -32,7 +32,7 @@ jobs:
       - name: Install coverage
         run: poetry add coverage
       - name: Run tests
-        run: poetry run coverage run --branch --omit tests.py tests.py
+        run: poetry run coverage run --branch --omit tests.py -m unittest -v tests.py
       - name: Generate coverage report
         run: poetry run coverage xml
       - name: Upload coverage report
