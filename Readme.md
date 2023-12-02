@@ -10,7 +10,7 @@
 
 Easily create a bar chart with `kwbar`; pass keyword arguments that can be converted to float.
 
-![kwbar](https://github.com/John-P/kwbar/raw/main/kwbar.png)
+![kwbar](https://github.com/John-P/kwbar/raw/main/images/kwbar-solarized-dark.svg)
 
 I made this for fun, but then I thought other people might actually find it useful.
 
@@ -61,10 +61,13 @@ There are also a couple of functions to set multiple options at once:
 Sets `BAR_CHARS` and `PAD` to ASCII characters. Also disables all ANSI escape codes and sets `BEFORE` true.
 
 ```python
->>> import kwbar
->>> kwbar.WIDTH = 50
->>> kwbar.ascii()
->>> kwbar.kwbar(one=1, two=2, three=3, four=4)
+import kwbar
+kwbar.WIDTH = 50
+kwbar.ascii()
+kwbar.kwbar(one=1, two=2, three=3, four=4)
+```
+
+```plain
   one +1.00e+00 XXXXXXXX
   two +2.00e+00 XXXXXXXXXXXXXXXXX
 three +3.00e+00 XXXXXXXXXXXXXXXXXXXXXXXXX
@@ -73,13 +76,125 @@ three +3.00e+00 XXXXXXXXXXXXXXXXXXXXXXXXX
 
 ### Hotdog Mode
 
-````python
->>> import kwbar
->>> kwbar.WIDTH = 33
->>> kwbar.hotdog()
->>> kwbar.kwbar(one=1, two=2, three=3, four=4)
+```python
+import kwbar
+kwbar.WIDTH = 33
+kwbar.hotdog()
+kwbar.kwbar(one=1, two=2, three=3, four=4)
+```
+
+```plain
   one 🌭🌭🌭🌭🌭🌭¾
   two 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭½
 three 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭¼
  four 🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭🌭
-````
+```
+
+## How do I...?
+
+### Reset All Options
+
+```python
+import kwbar
+
+kwbar.ascii()
+
+# Reset to defaults.
+import importlib
+
+importlib.reload(kwbar)
+```
+
+### Use Keys That Are Not Valid Python Keywords
+
+```python
+import kwbar
+
+kwbar.ascii()
+kwbar.kwbar(**{"one": 1, "-2": -2, "pi": 3.14})
+```
+
+```plain
+one +1.00e+00 XXXXXX
+ -2 -2.00e+00 XXXXXXXXXXXX
+ pi +3.14e+00 XXXXXXXXXXXXXXXXXXX
+```
+
+### Print Dogs Instead of Hotdogs
+
+```python
+import kwbar
+kwbar.hotdog()
+kwbar.BAR_CHARS = kwbar.BAR_CHARS[:-1] + "🐶" # Replace the last character.
+kwbar.kwbar(one=1, two=2, pi=3.14)
+```
+
+```plain
+one 🐶🐶🐶🐶🐶🐶🐶🐶🐶¼
+two 🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶½
+ pi 🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶
+```
+
+## Themes
+
+Just some ideas for how you could customize the output.
+
+### Lines
+
+```python
+import kwbar
+kwbar.hotdog()
+kwbar.BAR_CHARS = "╸━"
+```
+
+![Red and blue lines in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/lines-solarized-dark.svg)
+
+### Blue Red Lines
+
+```python
+import kwbar
+kwbar.hotdog()
+kwbar.BAR_CHARS = "╸━"
+kwbar.POS = "\x1b[34m"
+kwbar.NEG = "\x1b[31m"
+```
+
+![Red and blue lines in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/rb-lines-solarized-dark.svg)
+
+### Slices
+
+```python
+import kwbar
+kwbar.hotdog()
+kwbar.BAR_CHARS = "◔◑◕●"
+```
+
+![Slices in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/slices-solarized-dark.svg)
+
+### Quater Tally
+
+```python
+import kwbar
+kwbar.hotdog()
+kwbar.BAR_CHARS = " ¼½¾1"
+```
+
+![Quater tally in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/quater-tally-solarized-dark.svg)
+
+### Eighths
+
+```python
+kwbar.hotdog()
+kwbar.BAR_CHARS = " ⅛¼⅜½⅝¾⅞1"
+```
+
+![Eighths in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/eighths-solarized-dark.svg)
+
+### Hatching
+
+```python
+kwbar.hotdog()
+kwbar.BAR_CHARS = "🥚🐣🐥"
+```
+
+![Hatching in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/hatching-solarized-dark.svg)
