@@ -147,7 +147,7 @@ kwbar.hotdog()
 kwbar.BAR_CHARS = "╸━"
 ```
 
-![Red and blue lines in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/lines-solarized-dark.svg)
+![Red and blue lines in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/lines-solarized-dark.svg)
 
 ### Blue Red Lines
 
@@ -159,7 +159,7 @@ kwbar.POS = "\x1b[34m"
 kwbar.NEG = "\x1b[31m"
 ```
 
-![Red and blue lines in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/rb-lines-solarized-dark.svg)
+![Red and blue lines in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/rb-lines-solarized-dark.svg)
 
 ### Slices
 
@@ -169,7 +169,7 @@ kwbar.hotdog()
 kwbar.BAR_CHARS = "◔◑◕●"
 ```
 
-![Slices in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/slices-solarized-dark.svg)
+![Slices in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/slices-solarized-dark.svg)
 
 ### Quater Tally
 
@@ -179,7 +179,7 @@ kwbar.hotdog()
 kwbar.BAR_CHARS = " ¼½¾1"
 ```
 
-![Quater tally in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/quater-tally-solarized-dark.svg)
+![Quater tally in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/quater-tally-solarized-dark.svg)
 
 ### Eighths
 
@@ -188,7 +188,7 @@ kwbar.hotdog()
 kwbar.BAR_CHARS = " ⅛¼⅜½⅝¾⅞1"
 ```
 
-![Eighths in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/eighths-solarized-dark.svg)
+![Eighths in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/eighths-solarized-dark.svg)
 
 ### Hatching
 
@@ -197,4 +197,4 @@ kwbar.hotdog()
 kwbar.BAR_CHARS = "🥚🐣🐥"
 ```
 
-![Hatching in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/images/hatching-solarized-dark.svg)
+![Hatching in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/hatching-solarized-dark.svg)
