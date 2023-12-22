@@ -18,19 +18,20 @@ I made this for fun, but then I thought other people might actually find it usef
 
 `kwbar` several useful features:
 
+- Plots bars showing the relative magnitide (absolute value) of kwargs.
+- Prints the values of the passed keyword arguments in scientific notation.
 - Pure Python and zero dependencies.
-- Minimal implementation which can be audited in a few minutes.
+- Minimal implementation (<100 lines total) which can be audited in a few minutes.
 - Prints the names of the passed keyword arguments.
 - Plots any object that can be converted to float (SupportsFloat).
-- Customizable width, but it uses the entire terminal width by default.
-- Prints the values of the passed keyword arguments in scientific notation.
-- Customizable significant figures.
+- Customizable width, the entire terminal width is used by default.
+- Customizable significant figures, 3 by default.
 - Shows value labels inside bars, making the output width predictable. If the bars are too small, the value labels appear outside of them.
 - Handles inf and NaN values.
 - Negative values are [(ANSI) colored](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors) red and can be customized.
 - Respects the [`NO_COLOR` environment variable](https://no-color.org).
 - Has an ASCII mode, enabled on import when stdout is not TTY.
-- Warns on stderr (can be disabled) if the output will have to overrun the configured width.
+- Warns on stderr (can be disabled) if the output will have to overrun the configured width. Overflow can generally be avoided by configuting [options](#options) such as `BEFORE=True`.
 - Fixed output width. This is done by setting `TRUNCATE` and `WIDTH` to satisfy: `WIDTH` - `TRUNCATE` - `SF` - 17 >= 0.
 
 ## Options
@@ -198,3 +199,49 @@ kwbar.BAR_CHARS = "🥚🐣🐥"
 ```
 
 ![Hatching in Solarized Dark colorscheme](https://github.com/John-P/kwbar/raw/main/images/hatching-solarized-dark.svg)
+
+
+## FAQs
+
+These are questions that I frequently asked myself while making this.
+
+### Why did you make this?
+For fun!
+
+### Why did you format the script to fill 80 characters on a line?
+Because I could and it made me happy.
+
+### Why did you use module variables for configuration?
+Because it kept the implementation simple/minimal.
+This also means that if you import kwbar in multiple places within a script,
+it will have a consistent style and does not need to be configured multiple times.
+
+### How do I have multiple kwbar copies with different configurations?
+The configuration for kwbar affects all calls to `kwbar.kwbar`, becuase it is a static
+function using module variables for configuration.
+If you *really* want to do this, you can, but it feels like a hideous hack:
+
+```python
+import sys
+import importlib
+
+SPEC_KWBAR = importlib.util.find_spec('kwbar')
+kwbar2 = importlib.util.module_from_spec(SPEC_KWBAR)
+SPEC_KWBAR.loader.exec_module(kwbar2)
+sys.modules['kwbar2'] = kwbar2
+```
+
+Now you have another kwbar called kwbar2 with a completely seperate configuration.
+
+```python
+>>> kwbar.WIDTH = 40
+>>> kwbar2.WIDTH = 50
+>>> print(kwbar.WIDTH)
+40
+>>> print(kwbar2.WIDTH)
+50
+```
+
+## Why didn't you just make the first argument a dictionary and use kwargs for configuration?
+Becuase that was less fun that using only kwargs.
+
