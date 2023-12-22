@@ -32,7 +32,9 @@ I made this for fun, but then I thought other people might actually find it usef
 - Respects the [`NO_COLOR` environment variable](https://no-color.org).
 - Has an ASCII mode, enabled on import when stdout is not TTY.
 - Warns on stderr (can be disabled) if the output will have to overrun the configured width. Overflow can generally be avoided by configuting [options](#options) such as `BEFORE=True`.
-- Fixed output width. This is done by setting `TRUNCATE` and `WIDTH` to satisfy: `WIDTH` - `TRUNCATE` - `SF` - 17 >= 0.
+- Fixed output width. This can be done by either:
+    1. Setting `BEFORE = True`, or
+    2. setting `TRUNCATE` and `WIDTH` to satisfy: `WIDTH` - `TRUNCATE` - `SF` - 17 >= 0.
 
 ## Options
 
